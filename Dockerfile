@@ -3,9 +3,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-# Empty base uses the frontend's /api proxy; browsers never resolve Docker hostnames.
-ARG VITE_API_BASE_URL=""
+# Supply the backend browser URL when building this independent frontend.
+ARG VITE_API_BASE_URL
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+RUN test -n "$VITE_API_BASE_URL" || (echo "Set VITE_API_BASE_URL with --build-arg" >&2; exit 1)
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:1.28.0-alpine AS runtime
