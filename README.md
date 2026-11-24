@@ -6,9 +6,10 @@ no demo mode or substitute scan data.
 
 ## Run the complete application with Docker
 
-The frontend is included under `frontend/` in the same repository as the API.
-Start Docker Desktop, stop local dev servers using ports 3000/8000, and run from
-the repository root:
+This frontend has its own repository. The API repository includes it as the
+`frontend/` Git submodule. Clone the API with `--recurse-submodules` for the full
+application. Start Docker Desktop, stop local dev servers using ports 3000/8000,
+and run from the **API repository root**:
 
 ```sh
 docker compose up --build -d --wait
@@ -33,12 +34,12 @@ docker compose down
 ```
 
 Database data is retained unless the volume is explicitly removed. For the database
-viewer and full setup details, see the [API README](../README.md).
+viewer and full setup details, see the [API README](https://github.com/deepz2002/Gauntlet-api/blob/main/README.md).
 
 ## Local development prerequisites
 
 - Node.js 22 and npm.
-- The API and PostgreSQL running; follow Option B in the [API setup](../README.md).
+- The API and PostgreSQL running; follow Option B in the [API setup](https://github.com/deepz2002/Gauntlet-api/blob/main/README.md).
 - Stop the Docker frontend before running Vite: from `Gauntlet-api`, run
   `docker compose stop frontend`. Both use host port 3000.
 
@@ -56,10 +57,10 @@ Node is not otherwise on your PATH.
 
 ## Install and run
 
-Open a separate terminal for the frontend. From the repository root:
+Open a separate terminal in your frontend checkout (`Gauntlet-ui` when cloned
+separately, or `Gauntlet-api/frontend` in the complete project):
 
 ```sh
-cd frontend
 npm ci
 # First setup only; preserve an existing .env.local:
 cp .env.example .env.local
@@ -128,10 +129,18 @@ returns `{"status":"ok"}`, verify `VITE_API_BASE_URL`, and check the API's CORS 
 | `src/components/ApiDrawer.tsx` | Request log drawer |
 | `src/lib/types.ts` | API types and original inventory account display labels |
 
-Frontend Docker packaging and the root GitHub Actions workflow are implemented. AI coding assistance was used
-for development and verification.
+Frontend Docker packaging and the API repository's GitHub Actions workflow are
+implemented. I supplied the React/Tailwind interface requirements and directed the
+scan flow, all-cloud scanning, skeleton loading, collapsible history and API drawer.
+I used OpenAI Codex as a coding tool to implement the components, API integration,
+tests and container configuration, and to help debug and verify them.
+
+The assignment supplies the security rules; the frontend displays backend-generated
+results and does not implement or fabricate those security decisions. Full project
+AI disclosure and development notes are in the
+[API repository](https://github.com/deepz2002/Gauntlet-api/blob/main/DEVELOPMENT_NOTES.md).
 
 ESLint checks TypeScript and the runtime React Hooks rules with zero warnings.
 CI installs from the lockfile and runs `npm run lint`, `npm run typecheck`,
 `npm test` and `npm run build`. The workflow and manual repository setup are
-documented in the [root README](../README.md).
+documented in the [API README](https://github.com/deepz2002/Gauntlet-api/blob/main/README.md).
