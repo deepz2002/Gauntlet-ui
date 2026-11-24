@@ -62,16 +62,13 @@ separately, or `Gauntlet-api/frontend` in the complete project):
 
 ```sh
 npm ci
-# First setup only; preserve an existing .env.local:
-cp .env.example .env.local
+# Save the separately supplied frontend environment file as .env.local first.
 npm run dev
 ```
 
-The `.env.local` file should contain:
-
-```dotenv
-VITE_API_BASE_URL=http://localhost:8000
-```
+Save the frontend environment file provided separately by email as `.env.local`
+in this directory. Its contents are not included in this README. Do not commit it
+to Git or overwrite an existing configuration unintentionally.
 
 Open **http://127.0.0.1:3000**. Leave the dev-server terminal running. Restart Vite
 after changing `.env.local`; frontend environment values are read at startup/build.
